@@ -6,7 +6,7 @@
   Functions include: *App scans webpage QRCode* / *Web inputs App verification code* to bind the mobile IMEI.
 
 
-![Project Demo](demo_image/UI_US5NET.png)
+![Project Demo](demo_image/UI_FIDO.png)
 
 ## System Requirements
 
