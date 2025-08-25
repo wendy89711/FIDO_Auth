@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Seminar.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_LOGIN_CODE">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="IMEI" />
+            <PropertyRef Name="VerifyCode" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="IMEI" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="VerifyCode" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Isvalid" Type="bit" />
+        </EntityType>
+        <EntityType Name="T_LOGIN_DATA">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="IMEI" />
+            <PropertyRef Name="LoginTime" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="IMEI" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="LoginTime" Type="datetime" Nullable="false" />
+          <Property Name="LoginWeb" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_LOGIN_QR">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="IMEI" />
+            <PropertyRef Name="QRCode" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="IMEI" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="QRCode" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Isvalid" Type="bit" />
+        </EntityType>
+        <EntityType Name="T_USER_DATA">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Isvalid" Type="bit" />
+          <Property Name="ValidTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_USER_DV">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="DvNo" />
+            <PropertyRef Name="IMEI" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="DvNo" Type="int" Nullable="false" />
+          <Property Name="IMEI" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Isvalid" Type="bit" />
+        </EntityType>
+        <Association Name="FK_T_LOGIN_CODE_T_USER_DATA">
+          <End Role="T_USER_DATA" Type="Self.T_USER_DATA" Multiplicity="1" />
+          <End Role="T_LOGIN_CODE" Type="Self.T_LOGIN_CODE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_LOGIN_CODE">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_LOGIN_DATA_T_USER_DATA1">
+          <End Role="T_USER_DATA" Type="Self.T_USER_DATA" Multiplicity="1" />
+          <End Role="T_LOGIN_DATA" Type="Self.T_LOGIN_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_LOGIN_DATA">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_LOGIN_QR_T_USER_DATA">
+          <End Role="T_USER_DATA" Type="Self.T_USER_DATA" Multiplicity="1" />
+          <End Role="T_LOGIN_QR" Type="Self.T_LOGIN_QR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_LOGIN_QR">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_USER_DV_T_USER_DATA">
+          <End Role="T_USER_DATA" Type="Self.T_USER_DATA" Multiplicity="1" />
+          <End Role="T_USER_DV" Type="Self.T_USER_DV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_USER_DV">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SeminarStoreContainer">
+          <EntitySet Name="T_LOGIN_CODE" EntityType="Self.T_LOGIN_CODE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_LOGIN_DATA" EntityType="Self.T_LOGIN_DATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_LOGIN_QR" EntityType="Self.T_LOGIN_QR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_USER_DATA" EntityType="Self.T_USER_DATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_USER_DV" EntityType="Self.T_USER_DV" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_T_LOGIN_CODE_T_USER_DATA" Association="Self.FK_T_LOGIN_CODE_T_USER_DATA">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_LOGIN_CODE" EntitySet="T_LOGIN_CODE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_LOGIN_DATA_T_USER_DATA1" Association="Self.FK_T_LOGIN_DATA_T_USER_DATA1">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_LOGIN_DATA" EntitySet="T_LOGIN_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_LOGIN_QR_T_USER_DATA" Association="Self.FK_T_LOGIN_QR_T_USER_DATA">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_LOGIN_QR" EntitySet="T_LOGIN_QR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_USER_DV_T_USER_DATA" Association="Self.FK_T_USER_DV_T_USER_DATA">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_USER_DV" EntitySet="T_USER_DV" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Seminar" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_USER_DV">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="DvNo" />
+            <PropertyRef Name="IMEI" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DvNo" Type="Int32" Nullable="false" />
+          <Property Name="IMEI" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isvalid" Type="Boolean" />
+          <NavigationProperty Name="T_USER_DATA" Relationship="Seminar.FK_T_USER_DV_T_USER_DATA" FromRole="T_USER_DV" ToRole="T_USER_DATA" />
+        </EntityType>
+        <EntityContainer Name="SeminarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_USER_DV" EntityType="Self.T_USER_DV" />
+          <EntitySet Name="T_USER_DATA" EntityType="Seminar.T_USER_DATA" />
+          <AssociationSet Name="FK_T_USER_DV_T_USER_DATA" Association="Seminar.FK_T_USER_DV_T_USER_DATA">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_USER_DV" EntitySet="T_USER_DV" />
+          </AssociationSet>
+          <EntitySet Name="T_LOGIN_CODE" EntityType="Seminar.T_LOGIN_CODE" />
+          <EntitySet Name="T_LOGIN_DATA" EntityType="Seminar.T_LOGIN_DATA" />
+          <EntitySet Name="T_LOGIN_QR" EntityType="Seminar.T_LOGIN_QR" />
+          <AssociationSet Name="FK_T_LOGIN_CODE_T_USER_DATA" Association="Seminar.FK_T_LOGIN_CODE_T_USER_DATA">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_LOGIN_CODE" EntitySet="T_LOGIN_CODE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_LOGIN_DATA_T_USER_DATA1" Association="Seminar.FK_T_LOGIN_DATA_T_USER_DATA1">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_LOGIN_DATA" EntitySet="T_LOGIN_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_LOGIN_QR_T_USER_DATA" Association="Seminar.FK_T_LOGIN_QR_T_USER_DATA">
+            <End Role="T_USER_DATA" EntitySet="T_USER_DATA" />
+            <End Role="T_LOGIN_QR" EntitySet="T_LOGIN_QR" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="T_USER_DATA">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Isvalid" Type="Boolean" />
+          <Property Name="ValidTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="T_USER_DV" Relationship="Seminar.FK_T_USER_DV_T_USER_DATA" FromRole="T_USER_DATA" ToRole="T_USER_DV" />
+          <NavigationProperty Name="T_LOGIN_CODE" Relationship="Seminar.FK_T_LOGIN_CODE_T_USER_DATA" FromRole="T_USER_DATA" ToRole="T_LOGIN_CODE" />
+          <NavigationProperty Name="T_LOGIN_DATA" Relationship="Seminar.FK_T_LOGIN_DATA_T_USER_DATA1" FromRole="T_USER_DATA" ToRole="T_LOGIN_DATA" />
+          <NavigationProperty Name="T_LOGIN_QR" Relationship="Seminar.FK_T_LOGIN_QR_T_USER_DATA" FromRole="T_USER_DATA" ToRole="T_LOGIN_QR" />
+        </EntityType>
+        <Association Name="FK_T_USER_DV_T_USER_DATA">
+          <End Type="Seminar.T_USER_DATA" Role="T_USER_DATA" Multiplicity="1" />
+          <End Type="Seminar.T_USER_DV" Role="T_USER_DV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_USER_DV">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="T_LOGIN_CODE">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="IMEI" />
+            <PropertyRef Name="VerifyCode" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="IMEI" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="VerifyCode" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isvalid" Type="Boolean" />
+          <NavigationProperty Name="T_USER_DATA" Relationship="Seminar.FK_T_LOGIN_CODE_T_USER_DATA" FromRole="T_LOGIN_CODE" ToRole="T_USER_DATA" />
+        </EntityType>
+        <EntityType Name="T_LOGIN_DATA">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="IMEI" />
+            <PropertyRef Name="LoginTime" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="IMEI" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="LoginTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LoginWeb" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_USER_DATA" Relationship="Seminar.FK_T_LOGIN_DATA_T_USER_DATA1" FromRole="T_LOGIN_DATA" ToRole="T_USER_DATA" />
+        </EntityType>
+        <EntityType Name="T_LOGIN_QR">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="IMEI" />
+            <PropertyRef Name="QRCode" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="IMEI" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="QRCode" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isvalid" Type="Boolean" />
+          <NavigationProperty Name="T_USER_DATA" Relationship="Seminar.FK_T_LOGIN_QR_T_USER_DATA" FromRole="T_LOGIN_QR" ToRole="T_USER_DATA" />
+        </EntityType>
+        <Association Name="FK_T_LOGIN_CODE_T_USER_DATA">
+          <End Type="Seminar.T_USER_DATA" Role="T_USER_DATA" Multiplicity="1" />
+          <End Type="Seminar.T_LOGIN_CODE" Role="T_LOGIN_CODE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_LOGIN_CODE">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_LOGIN_DATA_T_USER_DATA1">
+          <End Type="Seminar.T_USER_DATA" Role="T_USER_DATA" Multiplicity="1" />
+          <End Type="Seminar.T_LOGIN_DATA" Role="T_LOGIN_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_LOGIN_DATA">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_LOGIN_QR_T_USER_DATA">
+          <End Type="Seminar.T_USER_DATA" Role="T_USER_DATA" Multiplicity="1" />
+          <End Type="Seminar.T_LOGIN_QR" Role="T_LOGIN_QR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER_DATA">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="T_LOGIN_QR">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SeminarStoreContainer" CdmEntityContainer="SeminarEntities">
+          <EntitySetMapping Name="T_USER_DV">
+            <EntityTypeMapping TypeName="Seminar.T_USER_DV">
+              <MappingFragment StoreEntitySet="T_USER_DV">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DvNo" ColumnName="DvNo" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Isvalid" ColumnName="Isvalid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_USER_DATA">
+            <EntityTypeMapping TypeName="Seminar.T_USER_DATA">
+              <MappingFragment StoreEntitySet="T_USER_DATA">
+                <ScalarProperty Name="ValidTime" ColumnName="ValidTime" />
+                <ScalarProperty Name="Isvalid" ColumnName="Isvalid" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_LOGIN_CODE">
+            <EntityTypeMapping TypeName="Seminar.T_LOGIN_CODE">
+              <MappingFragment StoreEntitySet="T_LOGIN_CODE">
+                <ScalarProperty Name="Isvalid" ColumnName="Isvalid" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="VerifyCode" ColumnName="VerifyCode" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_LOGIN_DATA">
+            <EntityTypeMapping TypeName="Seminar.T_LOGIN_DATA">
+              <MappingFragment StoreEntitySet="T_LOGIN_DATA">
+                <ScalarProperty Name="LoginWeb" ColumnName="LoginWeb" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_LOGIN_QR">
+            <EntityTypeMapping TypeName="Seminar.T_LOGIN_QR">
+              <MappingFragment StoreEntitySet="T_LOGIN_QR">
+                <ScalarProperty Name="Isvalid" ColumnName="Isvalid" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="QRCode" ColumnName="QRCode" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

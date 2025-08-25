@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("AfterLogin", "Register")" style="display:inline">
+                <img src="~/images/ck.png" width="60" height="53" />
+            </a>
+            <a class="navbar-brand" href="@Url.Action("AfterLogin", "Register")" style="display:inline">
+                <img src="~/images/name.png" width="200" height="45" />
+            </a>
+            @*<a class="nav-link" href="@Url.Action("Index", "Home")" style="font-size:28px">
+                行動身分驗證
+            </a>*@
+            <span></span>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav navbar-right" style="font-size:16px">
+                    <li class="nav-item">
+                        <a >活動紀錄查詢</a>
+                    </li>
+                    <li class="nav-item">
+                        <a>帳號資訊</a>
+                    </li>
+                    <li class="nav-item">
+                        <a>裝置管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-warning" style="font-size:16px" onclick="location.href='@Url.Action("Index", "Home")'">登出</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <!--<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("首頁", "Index", "Home")</li>-->
+    @*<li>@Html.ActionLink("關於", "About", "Home")</li>
+        <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>*@
+    <!--<li>@Html.ActionLink("登入", "Index", "Register")</li>
+            </ul>
+        </div>
+    </div>-->
+    
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
